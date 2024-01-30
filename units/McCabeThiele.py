@@ -1,14 +1,8 @@
-from typing import List
+from numpy.polynomial import Polynomial
 
+from models.IsothermModeling import IsothermModel
 
 class McCabeThiele:
-    def __init__(self, equilibrium_cruve: List[float]) -> None:
-        pass
-
-    def getFlows(
-        coordinate: [float, float], show_plot: bool = False
-    ) -> [List[float], List[float]]:
-        pass
-
-    def __plot() -> None:
-        pass
+    def __init__(self, isotherm_model : IsothermModel, ratio : float) -> None:
+        self.isotherm_poly = isotherm_model.characteristic_poly
+        self.operating_poly = Polynomial([0, 1/ratio]) 
