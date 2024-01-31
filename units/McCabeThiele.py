@@ -10,14 +10,14 @@ class McCabeThiele:
     def __init__(
         self,
         isotherm_model: IsothermModel,
-        ratio: float,  # OpLine = Va/Vo
+        operating_line: float,  # OpLine = Va/Vo
         inlet_Uconcentration: float,
         num_stages: int,
         efficiency: float,
         plot: bool,
     ) -> None:
         self.isotherm_poly = isotherm_model.characteristic_poly
-        self.operating_poly = Polynomial([0, ratio])
+        self.operating_line = operating_line
         self.__inlet_Uconcentration = inlet_Uconcentration
         self.__efficiency = efficiency
         self.__num_stages = num_stages
@@ -34,14 +34,14 @@ class McCabeThiele:
         plt.plot(X_isotherm, Y_isotherm)
         plt.plot(
             [0, self.__inlet_Uconcentration],
-            [self.operating_poly(0), self.operating_poly(self.__inlet_Uconcentration)],
+            [self.operating_line(0), self.operating_line(self.__inlet_Uconcentration)],
         )
 
         for i in range(len(self.__X_staircase)):
             plt.plot(self.__X_staircase[i], self.__Y_staircase[i], c="black")
 
         plt.xlim(left=0)
-        plt.ylim(bottom=0)
+        plt.ylim(0, self.operating_line(self.__inlet_Uconcentration) * 1.05)
         # plt.xlabel("Uranium in Aqueous Phase (g/L)")
         # plt.ylabel("Uranium in Organic Phase (g/L)")
         # plt.title(
@@ -53,11 +53,11 @@ class McCabeThiele:
         self.__X_staircase = [
             [self.__inlet_Uconcentration, self.__inlet_Uconcentration]
         ]
-        self.__Y_staircase = [[0, self.operating_poly(self.__inlet_Uconcentration)]]
+        self.__Y_staircase = [[0, self.operating_line(self.__inlet_Uconcentration)]]
 
         current = [
             self.__inlet_Uconcentration,
-            self.operating_poly(self.__inlet_Uconcentration),
+            self.operating_line(self.__inlet_Uconcentration),
         ]
         self.__loaded_organic_Uconcentration = current[1]
 
@@ -82,7 +82,7 @@ class McCabeThiele:
             self.__Y_staircase.append([current[1], y])
             current = [x, y]
 
-            y = self.operating_poly(x)
+            y = self.operating_line(x)
             self.__X_staircase.append([current[0], x])
             self.__Y_staircase.append([current[1], y])
             current = [x, y]

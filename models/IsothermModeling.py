@@ -19,22 +19,6 @@ class IsothermModel:
         plot: bool = False,
         change_intercept: bool = True,
     ):
-        """
-        IsothermModel is a class for fitting polynomial regression models to isotherm data.
-
-        Parameters
-        ----------
-        data_path : str
-            The file path to the dataset.
-        x_label : str
-            The label of the independent variable in the dataset.
-        y_label : str
-            The label of the dependent variable in the dataset.
-        min_degree : int, optional
-            The minimum polynomial degree to test (default is 2).
-        max_degree : int, optional
-            The maximum polynomial degree to test (default is 6).
-        """
         self.__equilibrium_dataframe = pd.read_csv(data_path)
         self.x_label = x_label
         self.y_label = y_label
@@ -55,7 +39,6 @@ class IsothermModel:
             self.__plot_predictions()
 
     def __fit_poly_to_dataset(self, n):
-        """Fits a polynomial regression model of degree n and computes LOOCV MSE."""
         model = make_pipeline(
             PolynomialFeatures(n, include_bias=self.__intercept),
             LinearRegression(fit_intercept=False),
@@ -70,7 +53,6 @@ class IsothermModel:
         return -np.mean(scores)  # returns MSE
 
     def __find_best_degree(self):
-        """Finds the polynomial degree that minimizes the LOOCV MSE."""
         best_score = float("inf")
         best_degree = None
 
@@ -85,7 +67,6 @@ class IsothermModel:
         return best_degree
 
     def __plot_mse_vs_degree(self):
-        """Plots the MSE scores against the polynomial degrees with values tagged on each point."""
         degrees = list(self.__mse_scores.keys())
         scores = list(self.__mse_scores.values())
 
@@ -117,7 +98,6 @@ class IsothermModel:
         ax.legend()
 
     def __plot_predictions(self):
-        """Creates a figure with subplots for each degree, showing actual vs. predicted values"""
         num_plots = self.__max_poly_degree - self.__min_poly_degree + 1
         n_rows = num_plots // 2 + num_plots % 2
         n_cols = 2 if self.__max_poly_degree - self.__min_poly_degree + 1 > 1 else 1
@@ -133,10 +113,6 @@ class IsothermModel:
         plt.show()
 
     def __train_and_convert_to_numpy_poly(self):
-        """
-        Trains a polynomial regression model using the best degree on the full dataset
-        and converts the model to a numpy.polynomial.Polynomial object
-        """
         best_model = make_pipeline(
             PolynomialFeatures(self.__best_degree, include_bias=self.__intercept),
             LinearRegression(fit_intercept=False),
