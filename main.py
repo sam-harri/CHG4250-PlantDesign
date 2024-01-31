@@ -24,7 +24,7 @@ if __name__ == "__main__":
         inlet_Uconcentration=17.5,
         num_stages=4,
         efficiency=0.85,
-        plot=True,
+        plot=False,
     )
 
     stripping_unit = Stripping(
@@ -36,3 +36,5 @@ if __name__ == "__main__":
         efficiency=0.85,
         plot=True,
     )
+    
+    print(stripping_unit.get_barren_organic())

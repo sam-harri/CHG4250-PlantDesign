@@ -27,6 +27,10 @@ class Stripping(UnitInterface):
             efficiency=efficiency,
             plot=plot,
         )
+        
+        
+    def get_barren_organic(self) -> float:
+        return self.__mcct.get_depleted_raffinate()
 
     def get_operating_conditions() -> Dict[str, float]:
         pass
