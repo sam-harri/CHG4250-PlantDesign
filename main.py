@@ -18,7 +18,7 @@ if __name__ == "__main__":
     )
 
     extraction_unit = Extraction(
-        name="Extraction",
+        # name="Extraction",
         isotherm_model=extraction_isotherm,
         operating_line=Polynomial([0, 1 / 1.5]),
         inlet_Uconcentration=17.5,
@@ -28,7 +28,7 @@ if __name__ == "__main__":
     )
 
     stripping_unit = Stripping(
-        name="Stripping",
+        # name="Stripping",
         isotherm_model=stripping_isotherm,
         operating_line=Polynomial([0, 3]),
         inlet_Uconcentration=extraction_unit.get_loaded_organic_Uconcentration(),

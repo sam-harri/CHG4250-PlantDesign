@@ -9,7 +9,7 @@ from numpy.polynomial import Polynomial
 class Extraction(UnitInterface):
     def __init__(
         self,
-        name : str,
+        # name : str,
         isotherm_model: IsothermModel,
         operating_line: Polynomial,
         inlet_Uconcentration: float,
