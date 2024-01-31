@@ -7,6 +7,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.pipeline import make_pipeline
 
+
 class IsothermModel:
     def __init__(
         self,
@@ -16,6 +17,7 @@ class IsothermModel:
         min_degree=2,
         max_degree=5,
         plot: bool = False,
+        change_intercept: bool = True,
     ):
         """
         IsothermModel is a class for fitting polynomial regression models to isotherm data.
@@ -36,6 +38,7 @@ class IsothermModel:
         self.__equilibrium_dataframe = pd.read_csv(data_path)
         self.x_label = x_label
         self.y_label = y_label
+        self.__intercept = change_intercept
         # sk learn expects 2D tensor of shape (Features, Samples)
         self.__X = self.__equilibrium_dataframe[[self.x_label]].values
         self.__Y = self.__equilibrium_dataframe[self.y_label].values
@@ -54,11 +57,15 @@ class IsothermModel:
     def __fit_poly_to_dataset(self, n):
         """Fits a polynomial regression model of degree n and computes LOOCV MSE."""
         model = make_pipeline(
-            PolynomialFeatures(n, include_bias=False),
+            PolynomialFeatures(n, include_bias=self.__intercept),
             LinearRegression(fit_intercept=False),
         )
         scores = cross_val_score(
-            model, self.__X, self.__Y, cv=LeaveOneOut(), scoring="neg_mean_squared_error"
+            model,
+            self.__X,
+            self.__Y,
+            cv=LeaveOneOut(),
+            scoring="neg_mean_squared_error",
         )
         return -np.mean(scores)  # returns MSE
 
@@ -96,7 +103,7 @@ class IsothermModel:
 
     def __plot_for_degree(self, ax, degree):
         model = make_pipeline(
-            PolynomialFeatures(degree, include_bias=False),
+            PolynomialFeatures(degree, include_bias=self.__intercept),
             LinearRegression(fit_intercept=False),
         )
         model.fit(self.__X, self.__Y)
@@ -114,7 +121,7 @@ class IsothermModel:
         num_plots = self.__max_poly_degree - self.__min_poly_degree + 1
         n_rows = num_plots // 2 + num_plots % 2
         n_cols = 2 if self.__max_poly_degree - self.__min_poly_degree + 1 > 1 else 1
-        fig, axs = plt.subplots(n_rows, n_cols, figsize=(n_cols * 5, n_rows * 5))
+        _, axs = plt.subplots(n_rows, n_cols, figsize=(n_cols * 5, n_rows * 5))
         axs = axs.flatten() if n_rows > 1 else [axs]
 
         for i, degree in enumerate(
@@ -131,11 +138,12 @@ class IsothermModel:
         and converts the model to a numpy.polynomial.Polynomial object
         """
         best_model = make_pipeline(
-            PolynomialFeatures(self.__best_degree, include_bias=False),
+            PolynomialFeatures(self.__best_degree, include_bias=self.__intercept),
             LinearRegression(fit_intercept=False),
         )
         best_model.fit(self.__X, self.__Y)
         coefs = best_model.named_steps["linearregression"].coef_
-        full_coefs = [0, *coefs]
-        self.characteristic_poly = Polynomial(full_coefs)
+        if not self.__intercept:
+            coefs = np.concatenate([[0], coefs])
+        self.characteristic_poly = Polynomial(coefs)
         return self.characteristic_poly
