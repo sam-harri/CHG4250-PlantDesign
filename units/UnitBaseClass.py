@@ -3,11 +3,8 @@ from abc import ABC, abstractmethod
 
 
 class UnitInterface(ABC):
-    def __init__(self, name : str, inlet_streams : List, outlet_streams : List) -> None:
+    def __init__(self, name: str) -> None:
         self.name = name
-        self.inlet_streams = inlet_streams
-        self.outlet_streams = outlet_streams
-        pass
 
     @abstractmethod
     def get_operating_conditions(self) -> Dict[str, float]:
