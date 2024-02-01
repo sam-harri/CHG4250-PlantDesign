@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict
 from units.UnitBaseClass import UnitInterface
 from units.McCabeThiele import McCabeThiele
 from models.IsothermModeling import IsothermModel

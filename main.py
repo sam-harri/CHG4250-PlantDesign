@@ -5,7 +5,6 @@ from utils.Stream import Stream
 from utils.graph_viz import generate_process_graph, draw_process_graph
 
 import networkx as nx
-import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
     # stream definitions
@@ -92,14 +91,14 @@ if __name__ == "__main__":
         efficiency=0.9,
         plot=False,
     )
-    
+
     units = [
         ["Filtration"],
         ["AcidDecontamination", "Extraction"],
         ["Stripping", "DiluteAcidFeed"],
         ["Precipitation"],
     ]
-    
+
     streams = [
         pls,
         stripped_organic,
@@ -108,10 +107,9 @@ if __name__ == "__main__":
         depleted_raffinate,
         strip_liquor,
     ]
-    
-    
+
     G = generate_process_graph(units=units, streams=streams)
     draw_process_graph(G=G)
-    
+
     A = nx.adjacency_matrix(G=G)
     print(A.todense())

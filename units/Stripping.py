@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict
 from units.UnitBaseClass import UnitInterface
 from units.McCabeThiele import McCabeThiele
 from models.IsothermModeling import IsothermModel
@@ -45,7 +45,7 @@ class Stripping(UnitInterface):
         # update the outlets
         self.__stripped_organic = self.__mcct.get_bottom_coord()[0]
         self.__strip_liquor = self.__mcct.get_top_coord()[1]
-        
+
         print("\nAqeous State")
         print(f"Strip Liquor : {self.__mcct.get_top_coord()[1]}")
         print(f"Dilute Acid : {self.__mcct.get_bottom_coord()[1]}")
