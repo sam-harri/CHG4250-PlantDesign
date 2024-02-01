@@ -1,4 +1,3 @@
-
-class Componenet():
-    def __init__(self) -> None:
+class Component:
+    def __init__(self, name : str) -> None:
         pass

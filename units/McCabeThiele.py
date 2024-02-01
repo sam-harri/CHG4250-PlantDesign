@@ -59,7 +59,6 @@ class McCabeThiele:
             self.__inlet_Uconcentration,
             self.operating_line(self.__inlet_Uconcentration),
         ]
-        self.__loaded_organic_Uconcentration = current[1]
 
         for _ in range(self.__num_stages):
             intersection_poly = self.isotherm_poly - Polynomial([current[1]])
@@ -87,12 +86,16 @@ class McCabeThiele:
             self.__Y_staircase.append([current[1], y])
             current = [x, y]
 
-        self.__depleted_raffinate_Uconcentration = current[0]
+    def get_top_coord(self) -> float:
+        """
+        Extraction : [initialPLS, loadedOrganic]
+        Stripping : [Loaded Organic, Strip Liquor]
+        """
+        return [self.__X_staircase[0][1], self.__Y_staircase[0][1]]
 
-    def get_loaded_organic(self) -> float:
-        """returns the concentration of U in g/L in the loaded organic phase"""
-        return self.__loaded_organic_Uconcentration
-
-    def get_depleted_raffinate(self) -> float:
-        """returns the concenrtation of U in g/L in the depleted raffinate"""
-        return self.__depleted_raffinate_Uconcentration
+    def get_bottom_coord(self) -> float:
+        """
+        Extraction : [Raffinate, Stripped Organic]
+        Stripping : [Stripped Organic, Diluted Acid]
+        """
+        return [self.__X_staircase[-1][1], self.__Y_staircase[-1][1]]
