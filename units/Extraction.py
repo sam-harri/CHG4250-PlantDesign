@@ -62,5 +62,5 @@ class Extraction(UnitInterface):
     def get_pressure_drop(self) -> float:
         pass
 
-    def get_reactor_size(self) -> Dict[str, float]:
+    def get_unit_dimentions(self) -> Dict[str, float]:
         pass

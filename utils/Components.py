@@ -10,9 +10,9 @@ class Component:
         name: str,
         molecular_weight: float,
         flow_rate: float,
-        flow_type: str = "mass",
-        has_volume: bool = True,
-        density: float = None,
+        flow_type: str,
+        has_volume: bool,
+        density: float,
     ):
         self.name = name
         self.molecular_weight = molecular_weight
@@ -96,21 +96,6 @@ class Water(Component):
         )
 
 
-class UO2(Component):
-    MOLECULAR_WEIGHT = 270.03  # g/mol
-    DENSITY = None
-
-    def __init__(self, flow_rate, flow_type="mass"):
-        super().__init__(
-            name="UO2",
-            molecular_weight=UO2.MOLECULAR_WEIGHT,
-            flow_rate=flow_rate,
-            flow_type=flow_type,
-            has_volume=False,
-            density=UO2.DENSITY,
-        )
-
-
 class H2SO4(Component):
     MOLECULAR_WEIGHT = 98.079  # g/mol
     DENSITY = 1830  # kg/m^3
@@ -170,4 +155,123 @@ class ShellSolD70(Component):
             flow_type=flow_type,
             has_volume=True,
             density=ShellSolD70.DENSITY,
+        )
+
+
+class UO2(Component):
+    MOLECULAR_WEIGHT = 270.03  # g/mol
+    DENSITY = None
+
+    def __init__(self, flow_rate, flow_type="mass"):
+        super().__init__(
+            name="UO2",
+            molecular_weight=UO2.MOLECULAR_WEIGHT,
+            flow_rate=flow_rate,
+            flow_type=flow_type,
+            has_volume=False,
+            density=UO2.DENSITY,
+        )
+
+
+class H2SO5(Component):
+    MOLECULAR_WEIGHT = 114.078
+
+    def __init__(self, flow_rate, flow_type="mass"):
+        super().__init__(
+            name="H2SO5",
+            molecular_weight=H2SO5.MOLECULAR_WEIGHT,
+            flow_rate=flow_rate,
+            flow_type=flow_type,
+            has_volume=True,
+            density=H2SO5.DENSITY,
+        )
+
+
+class SO4_2m(Component):
+    MOLECULAR_WEIGHT = 96.06
+    DENSITY = None
+
+    def __init__(self, flow_rate, flow_type="mass"):
+        super().__init__(
+            name="SO4(-2)",
+            molecular_weight=SO4_2m.MOLECULAR_WEIGHT,
+            flow_rate=flow_rate,
+            flow_type=flow_type,
+            has_volume=False,
+            density=SO4_2m.DENSITY,
+        )
+
+
+class H_1p(Component):
+    MOLECULAR_WEIGHT = 1.01
+    DENSITY = None
+
+    def __init__(self, flow_rate, flow_type="mass"):
+        super().__init__(
+            name="H(+)",
+            molecular_weight=H_1p.MOLECULAR_WEIGHT,
+            flow_rate=flow_rate,
+            flow_type=flow_type,
+            has_volume=False,
+            density=H_1p.DENSITY,
+        )
+
+
+class Mg(Component):
+    MOLECULAR_WEIGHT = 24.305
+    DENSITY = None
+
+    def __init__(self, flow_rate, flow_type="mass"):
+        super().__init__(
+            name="Mg",
+            molecular_weight=Mg.MOLECULAR_WEIGHT,
+            flow_rate=flow_rate,
+            flow_type=flow_type,
+            has_volume=False,
+            density=Mg.DENSITY,
+        )
+
+
+class Fe(Component):
+    MOLECULAR_WEIGHT = 55.845
+    DENSITY = None
+
+    def __init__(self, flow_rate, flow_type="mass"):
+        super().__init__(
+            name="Fe",
+            molecular_weight=Fe.MOLECULAR_WEIGHT,
+            flow_rate=flow_rate,
+            flow_type=flow_type,
+            has_volume=False,
+            density=Fe.DENSITY,
+        )
+
+
+class SiO2(Component):
+    MOLECULAR_WEIGHT = 60.08
+    DENSITY = None
+
+    def __init__(self, flow_rate, flow_type="mass"):
+        super().__init__(
+            name="SiO2",
+            molecular_weight=SiO2.MOLECULAR_WEIGHT,
+            flow_rate=flow_rate,
+            flow_type=flow_type,
+            has_volume=False,
+            density=SiO2.DENSITY,
+        )
+
+
+class Al2SiO5(Component):
+    MOLECULAR_WEIGHT = 162.05
+    DENSITY = None
+
+    def __init__(self, flow_rate, flow_type="mass"):
+        super().__init__(
+            name="Al2SiO5",
+            molecular_weight=Al2SiO5.MOLECULAR_WEIGHT,
+            flow_rate=flow_rate,
+            flow_type=flow_type,
+            has_volume=False,
+            density=Al2SiO5.DENSITY,
         )

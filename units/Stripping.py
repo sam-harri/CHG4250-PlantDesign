@@ -59,5 +59,5 @@ class Stripping(UnitInterface):
     def get_pressure_drop() -> float:
         pass
 
-    def get_reactor_size() -> Dict[str, float]:
+    def get_unit_dimentions() -> Dict[str, float]:
         pass

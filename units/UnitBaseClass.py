@@ -11,7 +11,7 @@ class UnitInterface(ABC):
         pass
 
     @abstractmethod
-    def get_reactor_size(self) -> Dict[str, float]:
+    def get_unit_dimentions(self) -> Dict[str, float]:
         pass
 
     @abstractmethod
