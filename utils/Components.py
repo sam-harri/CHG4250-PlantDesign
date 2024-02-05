@@ -194,7 +194,7 @@ class SO4_2m(Component):
 
     def __init__(self, flow_rate, flow_type="mass"):
         super().__init__(
-            name="SO4(-2)",
+            name="SO4(2-)",
             molecular_weight=SO4_2m.MOLECULAR_WEIGHT,
             flow_rate=flow_rate,
             flow_type=flow_type,

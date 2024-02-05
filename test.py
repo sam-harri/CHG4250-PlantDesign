@@ -89,4 +89,17 @@ print()
 print(pls_acid)
 print()
 print(acidic_pls)
+<<<<<<< Updated upstream
 print(PLSMixer_unit.mass_balance())
+=======
+print(acidic_pls.total_volume)
+print(PLSMixer_unit.mass_balance())
+print(acidic_pls.get_component_property("H2SO4", "mass_flow")/acidic_pls.total_volume)
+
+# print(acidic_pls)
+# print(barren_organic)
+# print()
+# print(loaded_organic)
+# print(depleted_raffinate)
+
+>>>>>>> Stashed changes

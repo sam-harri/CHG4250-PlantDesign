@@ -56,6 +56,7 @@ class Stream:
         self._update_totals_and_state_vector()
 
     def get_component_property(self, component_name: str, property_name: str) -> float:
+        """mass_flow, molar_flow, volume_flow, mass_fraction, molar_fraction"""
         if component_name not in self.component_indices.keys():
             raise ValueError(
                 f"Component {component_name} not found in stream {self.stream_number}"

@@ -29,7 +29,7 @@ class PLSMixer(UnitInterface):
     def __size_acid_stream(self):
         mol_acid_needed = (
             self.__pls_stream.total_volume * 1000 * self.__h2so4_molaity_target
-        )  # mol, *1000 for m^3 to L
+        ) # mol, *1000 for m^3 to L
         mol_acid_extra_L = (
             PLSMixer.MOLARITY_98WpW_H2SO4 - self.__h2so4_molaity_target
         )  # mol / L
@@ -48,18 +48,18 @@ class PLSMixer(UnitInterface):
 
         updated_components = {comp.name: comp for comp in combined_components}
 
-        if not ("UO2_2p" in updated_components and "SO4(-2)" in updated_components):
+        if not ("UO2_2p" in updated_components and "SO4(2-)" in updated_components):
             raise ValueError("UO2_2p and SO4(-2) not in the PLSMixer component stream")
 
         uo2_2p_moles = updated_components["UO2_2p"].mol_flow
-        so4_2m_moles = updated_components["SO4(-2)"].mol_flow
+        so4_2m_moles = updated_components["SO4(2-)"].mol_flow
 
         if so4_2m_moles >= uo2_2p_moles:
             updated_components["UO2SO4"] = UO2SO4(
                 flow_rate=uo2_2p_moles, flow_type="molar"
             )
 
-            updated_components["SO4(-2)"].set_molar_flow(so4_2m_moles - uo2_2p_moles)
+            updated_components["SO4(2-)"].set_molar_flow(so4_2m_moles - uo2_2p_moles)
 
             del updated_components["UO2_2p"]
         else:
