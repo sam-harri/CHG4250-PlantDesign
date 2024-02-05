@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List
 from units.UnitBaseClass import UnitInterface
 from units.McCabeThiele import McCabeThiele
 from models.IsothermModeling import IsothermModel
@@ -62,5 +62,5 @@ class Extraction(UnitInterface):
     def get_pressure_drop(self) -> float:
         pass
 
-    def get_unit_dimentions(self) -> Dict[str, float]:
+    def get_reactor_size(self) -> Dict[str, float]:
         pass

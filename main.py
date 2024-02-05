@@ -12,7 +12,7 @@ if __name__ == "__main__":
         stream_number=1,
         origin="Filtration",
         destination="Extraction",
-        U_concentration=15.5,
+        U_concentration=2.901,
         volume=2,
     )
 

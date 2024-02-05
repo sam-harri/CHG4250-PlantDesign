@@ -69,10 +69,12 @@ class McCabeThiele:
                 (
                     current[0] - ((current[0] - root) * self.__efficiency)
                     for root in real_roots
-                    if 0 <= root <= self.__inlet_Uconcentration
+                    if root <= self.__inlet_Uconcentration
                 ),
                 None,
             )
+            if x<0:
+                x=0
             if x is None:
                 raise "No Real Roots found in McCabe and Thiele range"
 
