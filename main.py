@@ -78,7 +78,7 @@ if __name__ == "__main__":
         depleted_raffinate=depleted_raffinate,
         num_stages=5,
         efficiency=0.9,
-        plot=False,
+        plot=True,
     )
 
     stripping_unit = Stripping(
@@ -90,7 +90,7 @@ if __name__ == "__main__":
         strip_liquor=strip_liquor,
         num_stages=4,
         efficiency=0.9,
-        plot=False,
+        plot=True,
     )
     
     units = [
