@@ -280,7 +280,7 @@ class Al2SiO5(Component):
 
 class UO2SO4(Component):
     MOLECULAR_WEIGHT = 366.09
-    DENSITY = 3280 # kg /m^3
+    DENSITY = 3280  # kg /m^3
 
     def __init__(self, flow_rate, flow_type="mass"):
         super().__init__(

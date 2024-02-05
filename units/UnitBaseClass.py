@@ -17,3 +17,7 @@ class UnitInterface(ABC):
     @abstractmethod
     def get_pressure_drop(self) -> float:
         pass
+
+    @abstractmethod
+    def mass_balance(self) -> str:
+        pass

@@ -1,6 +1,9 @@
 from utils.Components import *
 from utils.Stream import Stream
-from units.PLSMixer import AcidMixer
+from models.IsothermModeling import IsothermModel
+from units.PLSMixer import PLSMixer
+from units.Extraction import Extraction
+
 
 overflow = Stream(
     stream_number=1,
@@ -24,16 +27,51 @@ pls_acid = Stream(
     destination="PLSMixer",
 )
 
-acidic_pls = Stream(stream_number=3,
+acidic_pls = Stream(
+    stream_number=3,
     origin="PLSMixer",
     destination="Extraction"
 )
 
-pls_mixer = AcidMixer(
+PLSMixer_unit = PLSMixer(
     name="PLSMixer",
     pls_stream=overflow,
     acid_stream=pls_acid,
     acidic_pls=acidic_pls,
+)
+
+loaded_organic = Stream(
+    stream_number=4,
+    origin="Extraction",
+    destination="Stripping",
+)
+
+barren_organic = Stream(
+    stream_number=5,
+    origin="Stripping",
+    destination="Extraction",
+    components=[UO2SO4(0)],
+    recycle=True,
+)
+
+depleted_raffinate = Stream(
+    stream_number=6,
+    origin="Extraction",
+    destination="Out",
+)
+
+Extraction_Unit = Extraction(
+    name="Extraction",
+    isotherm_model=IsothermModel(
+        data_path="data/UeqExtrationData.csv",
+        x_label="U(aq)",
+        y_label="U(org)",
+    ),
+    pls=acidic_pls,
+    stripped_organic=barren_organic,
+    loaded_organic=loaded_organic,
+    depleted_raffinate=depleted_raffinate,
+    num_stages=4,
 )
 
 print(overflow)
@@ -41,4 +79,4 @@ print()
 print(pls_acid)
 print()
 print(acidic_pls)
-print(f"Mass Balance : {overflow.total_mass+pls_acid.total_mass-acidic_pls.total_mass}")
+print(PLSMixer.mass_balance())
