@@ -2,7 +2,6 @@ import numpy as np
 from numpy.polynomial import Polynomial
 import matplotlib.pyplot as plt
 
-
 from models.IsothermModeling import IsothermModel
 
 

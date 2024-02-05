@@ -1,4 +1,14 @@
-from utils.Components import *
+from utils.Components import (
+    UO2_2p,
+    Water,
+    SO4_2m,
+    H_1p,
+    Mg,
+    Fe,
+    SiO2,
+    Al2SiO5,
+    UO2SO4,
+)
 from utils.Stream import Stream
 from models.IsothermModeling import IsothermModel
 from units.PLSMixer import PLSMixer
