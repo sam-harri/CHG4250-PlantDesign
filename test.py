@@ -1,16 +1,44 @@
 from utils.Components import *
 from utils.Stream import Stream
+from units.PLSMixer import AcidMixer
 
-water = Water(flow_rate=1000, flow_type="mass")
-isodecanol = Isodecanol(flow_rate=200, flow_type="mass")
-shellsold70 = ShellSolD70(flow_rate=300, flow_type="mass")
+overflow = Stream(
+    stream_number=1,
+    origin="Filtration",
+    destination="PLSMixer",
+    components=[
+        UO2_2p(13.37),
+        Water(2929.17),
+        SO4_2m(97.09),
+        H_1p(1.41),
+        Mg(5.01),
+        Fe(5.75),
+        SiO2(7.43),
+        Al2SiO5(10.02),
+    ],
+)
 
-stream1 = Stream(1, "Reactor", "Separator", [water, isodecanol, shellsold70])
-print(stream1)
+pls_acid = Stream(
+    stream_number=2,
+    origin="AcidTank",
+    destination="PLSMixer",
+)
 
-new_water = Water(flow_rate=1500, flow_type="mass")
-stream1.update_components([new_water, isodecanol, shellsold70])
-print("\nAfter update:")
-print(stream1)
+acidic_pls = Stream(stream_number=3,
+    origin="PLSMixer",
+    destination="Extraction"
+)
 
-print(stream1.get_component_property("Water", "mass_flow"))
+pls_mixer = AcidMixer(
+    name="PLSMixer",
+    pls_stream=overflow,
+    acid_stream=pls_acid,
+    acidic_pls=acidic_pls,
+)
+
+print(overflow)
+print()
+print(pls_acid)
+print()
+print(acidic_pls)
+print(f"Mass Balance : {overflow.total_mass+pls_acid.total_mass-acidic_pls.total_mass}")

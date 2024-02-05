@@ -2,7 +2,7 @@ class Component:
     """
     mol_flow in mol/h
     mass_flow in kg/hr
-    vol_flow in m^3/hr if its fine though
+    vol_flow in m^3/hr
     """
 
     def __init__(
@@ -158,23 +158,24 @@ class ShellSolD70(Component):
         )
 
 
-class UO2(Component):
+class UO2_2p(Component):
     MOLECULAR_WEIGHT = 270.03  # g/mol
     DENSITY = None
 
     def __init__(self, flow_rate, flow_type="mass"):
         super().__init__(
-            name="UO2",
-            molecular_weight=UO2.MOLECULAR_WEIGHT,
+            name="UO2_2p",
+            molecular_weight=UO2_2p.MOLECULAR_WEIGHT,
             flow_rate=flow_rate,
             flow_type=flow_type,
             has_volume=False,
-            density=UO2.DENSITY,
+            density=UO2_2p.DENSITY,
         )
 
 
 class H2SO5(Component):
     MOLECULAR_WEIGHT = 114.078
+    DENSITY = None
 
     def __init__(self, flow_rate, flow_type="mass"):
         super().__init__(
@@ -274,4 +275,19 @@ class Al2SiO5(Component):
             flow_type=flow_type,
             has_volume=False,
             density=Al2SiO5.DENSITY,
+        )
+
+
+class UO2SO4(Component):
+    MOLECULAR_WEIGHT = 366.09
+    DENSITY = 3280 # kg /m^3
+
+    def __init__(self, flow_rate, flow_type="mass"):
+        super().__init__(
+            name="UO2SO4",
+            molecular_weight=UO2SO4.MOLECULAR_WEIGHT,
+            flow_rate=flow_rate,
+            flow_type=flow_type,
+            has_volume=True,
+            density=UO2SO4.DENSITY,
         )
