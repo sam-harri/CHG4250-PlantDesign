@@ -50,43 +50,43 @@ PLSMixer_unit = PLSMixer(
     acidic_pls=acidic_pls,
 )
 
-loaded_organic = Stream(
-    stream_number=4,
-    origin="Extraction",
-    destination="Stripping",
-)
+# loaded_organic = Stream(
+#     stream_number=4,
+#     origin="Extraction",
+#     destination="Stripping",
+# )
 
-barren_organic = Stream(
-    stream_number=5,
-    origin="Stripping",
-    destination="Extraction",
-    components=[UO2SO4(0)],
-    recycle=True,
-)
+# barren_organic = Stream(
+#     stream_number=5,
+#     origin="Stripping",
+#     destination="Extraction",
+#     components=[UO2SO4(0)],
+#     recycle=True,
+# )
 
-depleted_raffinate = Stream(
-    stream_number=6,
-    origin="Extraction",
-    destination="Out",
-)
+# depleted_raffinate = Stream(
+#     stream_number=6,
+#     origin="Extraction",
+#     destination="Out",
+# )
 
-Extraction_Unit = Extraction(
-    name="Extraction",
-    isotherm_model=IsothermModel(
-        data_path="data/UeqExtrationData.csv",
-        x_label="U(aq)",
-        y_label="U(org)",
-    ),
-    pls=acidic_pls,
-    stripped_organic=barren_organic,
-    loaded_organic=loaded_organic,
-    depleted_raffinate=depleted_raffinate,
-    num_stages=4,
-)
+# Extraction_Unit = Extraction(
+#     name="Extraction",
+#     isotherm_model=IsothermModel(
+#         data_path="data/UeqExtrationData.csv",
+#         x_label="U(aq)",
+#         y_label="U(org)",
+#     ),
+#     pls=acidic_pls,
+#     stripped_organic=barren_organic,
+#     loaded_organic=loaded_organic,
+#     depleted_raffinate=depleted_raffinate,
+#     num_stages=4,
+# )
 
 print(overflow)
 print()
 print(pls_acid)
 print()
 print(acidic_pls)
-print(PLSMixer.mass_balance())
+print(PLSMixer_unit.mass_balance())
