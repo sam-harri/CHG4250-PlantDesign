@@ -50,56 +50,56 @@ PLSMixer_unit = PLSMixer(
     acidic_pls=acidic_pls,
 )
 
-# loaded_organic = Stream(
-#     stream_number=4,
-#     origin="Extraction",
-#     destination="Stripping",
-# )
+loaded_organic = Stream(
+    stream_number=4,
+    origin="Extraction",
+    destination="Stripping",
+)
 
-# barren_organic = Stream(
-#     stream_number=5,
-#     origin="Stripping",
-#     destination="Extraction",
-#     components=[UO2SO4(0)],
-#     recycle=True,
-# )
+barren_organic = Stream(
+    stream_number=5,
+    origin="Stripping",
+    destination="Extraction",
+    components=[UO2SO4(0.0461)],
+    recycle=True,
+)
 
-# depleted_raffinate = Stream(
-#     stream_number=6,
-#     origin="Extraction",
-#     destination="Out",
-# )
+depleted_raffinate = Stream(
+    stream_number=6,
+    origin="Extraction",
+    destination="Out",
+)
 
-# Extraction_Unit = Extraction(
-#     name="Extraction",
-#     isotherm_model=IsothermModel(
-#         data_path="data/UeqExtrationData.csv",
-#         x_label="U(aq)",
-#         y_label="U(org)",
-#     ),
-#     pls=acidic_pls,
-#     stripped_organic=barren_organic,
-#     loaded_organic=loaded_organic,
-#     depleted_raffinate=depleted_raffinate,
-#     num_stages=4,
-# )
+Extraction_Unit = Extraction(
+    name="Extraction",
+    isotherm_model=IsothermModel(
+        data_path="data/UeqExtrationData.csv",
+        x_label="U(aq)",
+        y_label="U(org)",
+        change_intercept=False,
+    ),
+    pls=acidic_pls,
+    stripped_organic=barren_organic,
+    loaded_organic=loaded_organic,
+    depleted_raffinate=depleted_raffinate,
+    num_stages=4,
+    efficiency=0.9,
+    OA_ratio=1.5,
+    plot=True,
+)
 
 print(overflow)
 print()
 print(pls_acid)
 print()
 print(acidic_pls)
-<<<<<<< Updated upstream
+print()
 print(PLSMixer_unit.mass_balance())
-=======
-print(acidic_pls.total_volume)
-print(PLSMixer_unit.mass_balance())
-print(acidic_pls.get_component_property("H2SO4", "mass_flow")/acidic_pls.total_volume)
-
-# print(acidic_pls)
-# print(barren_organic)
-# print()
-# print(loaded_organic)
-# print(depleted_raffinate)
-
->>>>>>> Stashed changes
+print()
+print(loaded_organic)
+print()
+print(barren_organic)
+print()
+print(depleted_raffinate)
+print()
+print(Extraction_Unit.mass_balance())

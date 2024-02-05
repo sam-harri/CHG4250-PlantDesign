@@ -71,7 +71,7 @@ class PLSMixer(UnitInterface):
         self.__acidic_pls.update_components(updated_components_list)
 
     def mass_balance(self) -> str:
-        return f"PLSMixer Mass Balance : {self.__acid_stream.total_mass+self.__pls_stream.total_mass-self.__acidic_pls.total_mass}"
+        return f"PLSMixer Mass Balance : {round(self.__acid_stream.total_mass+self.__pls_stream.total_mass-self.__acidic_pls.total_mass, 3)}"
 
     def get_operating_conditions(self) -> Dict[str, float]:
         pass

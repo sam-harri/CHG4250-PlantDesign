@@ -116,8 +116,8 @@ class Stream:
     def __repr__(self) -> str:
         component_details: str = "\n".join(
             [
-                f"{idx}: {comp.name} - Mass flow: {vec[0]:.2f} kg/h, "
-                f"Molar flow: {vec[1]:.2f} mol/h, Volume flow: {vec[2]:.6f} m^3/h"
+                f"{idx}: {comp.name} - Mass flow: {vec[0]:.6f} kg/h, "
+                f"Molar flow: {vec[1]:.6f} mol/h, Volume flow: {vec[2]:.6f} m^3/h"
                 for idx, (comp, vec) in enumerate(
                     zip(self.components, self.state_vector)
                 )
