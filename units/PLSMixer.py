@@ -29,7 +29,7 @@ class PLSMixer(UnitInterface):
     def __size_acid_stream(self):
         mol_acid_needed = (
             self.__pls_stream.total_volume * 1000 * self.__h2so4_molaity_target
-        ) # mol, *1000 for m^3 to L
+        )  # mol, *1000 for m^3 to L
         mol_acid_extra_L = (
             PLSMixer.MOLARITY_98WpW_H2SO4 - self.__h2so4_molaity_target
         )  # mol / L

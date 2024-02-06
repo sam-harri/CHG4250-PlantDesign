@@ -13,6 +13,7 @@ from utils.Stream import Stream
 from models.IsothermModeling import IsothermModel
 from units.PLSMixer import PLSMixer
 from units.Extraction import Extraction
+from units.Stripping import Stripping
 
 
 overflow = Stream(
@@ -37,11 +38,7 @@ pls_acid = Stream(
     destination="PLSMixer",
 )
 
-acidic_pls = Stream(
-    stream_number=3,
-    origin="PLSMixer",
-    destination="Extraction"
-)
+acidic_pls = Stream(stream_number=3, origin="PLSMixer", destination="Extraction")
 
 PLSMixer_unit = PLSMixer(
     name="PLSMixer",
@@ -60,8 +57,6 @@ barren_organic = Stream(
     stream_number=5,
     origin="Stripping",
     destination="Extraction",
-    components=[UO2SO4(0.0461)],
-    recycle=True,
 )
 
 depleted_raffinate = Stream(
@@ -70,7 +65,7 @@ depleted_raffinate = Stream(
     destination="Out",
 )
 
-Extraction_Unit = Extraction(
+Extraction_unit = Extraction(
     name="Extraction",
     isotherm_model=IsothermModel(
         data_path="data/UeqExtrationData.csv",
@@ -88,6 +83,33 @@ Extraction_Unit = Extraction(
     plot=True,
 )
 
+dilute_acid = Stream(
+    stream_number=7,
+    origin="In",
+    destination="Stripping",
+)
+
+strip_liquor = Stream(stream_number=8, origin="Extraction", destination="Precipitation")
+
+Stripping_unit = Stripping(
+    name="Stripping",
+    isotherm_model=IsothermModel(
+        data_path="data/UeqStrippingData.csv",
+        x_label="U(org)",
+        y_label="U(aq)",
+    ),
+    loaded_organic=loaded_organic,
+    stripping_agent=dilute_acid,
+    stripped_organic=barren_organic,
+    strip_liquor=strip_liquor,
+    stripped_org_Uconc=Extraction_unit.stripped_org_Uconc,
+    loaded_org_Uconc=Extraction_unit.loaded_org_Uconc,
+    num_stages=4,
+    efficiency=0.95,
+    plot=True,
+)
+
+
 print(overflow)
 print()
 print(pls_acid)
@@ -102,4 +124,10 @@ print(barren_organic)
 print()
 print(depleted_raffinate)
 print()
-print(Extraction_Unit.mass_balance())
+print(Extraction_unit.mass_balance())
+print()
+print(dilute_acid)
+print()
+print(strip_liquor)
+print()
+print(Stripping_unit.mass_balance())

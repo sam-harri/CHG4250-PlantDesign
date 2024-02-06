@@ -291,3 +291,42 @@ class UO2SO4(Component):
             has_volume=True,
             density=UO2SO4.DENSITY,
         )
+
+
+class MN2_1p(Component):
+    MOLECULAR_WEIGHT = 109.88  # g/ mol
+    DENSITY = None  # kg /m^3
+
+    def __init__(
+        self,
+        flow_rate: float,
+        flow_type: str = "mass",
+
+    ):
+        super().__init__(
+            name="MN2(+)",
+            molecular_weight=MN2_1p.MOLECULAR_WEIGHT,
+            flow_rate=flow_rate,
+            flow_type=flow_type,
+            has_volume=False,
+            density=MN2_1p.DENSITY,
+        )
+
+class Al_3p(Component):
+    MOLECULAR_WEIGHT = 26.98  # g/ mol
+    DENSITY = None  # kg /m^3
+
+    def __init__(
+        self,
+        flow_rate: float,
+        flow_type: str = "mass",
+
+    ):
+        super().__init__(
+            name="Al(3+)",
+            molecular_weight=Al_3p.MOLECULAR_WEIGHT,
+            flow_rate=flow_rate,
+            flow_type=flow_type,
+            has_volume=False,
+            density=Al_3p.DENSITY,
+        )

@@ -14,9 +14,6 @@ class Stream:
         components: List[Component] = [],
         recycle: bool = False,
     ) -> None:
-        if len(components) == 0 and recycle:
-            raise f"Must provide initial guess for recycle stream {stream_number}"
-
         self.stream_number = stream_number
         self.origin = origin
         self.destination = destination
