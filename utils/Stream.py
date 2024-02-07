@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import List, Dict
-from utils.Components import *
+from utils.Components import Component
 
 
 class Stream:

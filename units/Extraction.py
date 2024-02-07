@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict
 from units.UnitBaseClass import UnitInterface
 from units.McCabeThiele import McCabeThiele
 from models.IsothermModeling import IsothermModel
@@ -38,7 +38,7 @@ class Extraction(UnitInterface):
         # NOTE
         self.__tentative_BO = 0.01
         self.__tentative_DR = 0.08
-        
+
         self.__size_organics()
         self.__build_mcct()
         self.__update_outlets()

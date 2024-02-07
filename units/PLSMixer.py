@@ -2,7 +2,7 @@ from typing import Dict
 
 from units.UnitBaseClass import UnitInterface
 from utils.Stream import Stream
-from utils.Components import H2SO4, Water, UO2SO4
+from utils.Components import H2SO4, Water
 
 
 class PLSMixer(UnitInterface):

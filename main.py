@@ -1,15 +1,13 @@
 from utils.Components import (
-    UO2_2p,
     Water,
     SO4_2m,
     H_1p,
     Mg,
     Fe,
     SiO2,
-    Al2SiO5,
     UO2SO4,
     MN2_1p,
-    Al_3p
+    Al_3p,
 )
 from utils.Stream import Stream
 from models.IsothermModeling import IsothermModel
@@ -20,7 +18,7 @@ from units.Stripping import Stripping
 if __name__ == "__main__":
     overflow = Stream(
         stream_number=1,
-        origin="Filtration",
+        origin="In",
         destination="PLSMixer",
         components=[
             Water(1075.428),
@@ -31,13 +29,13 @@ if __name__ == "__main__":
             MN2_1p(1.063569),
             Mg(3.262506),
             SiO2(3.871035),
-            Al_3p(1.331062)
+            Al_3p(1.331062),
         ],
     )
 
     pls_acid = Stream(
         stream_number=2,
-        origin="AcidTank",
+        origin="In",
         destination="PLSMixer",
     )
 
@@ -92,7 +90,7 @@ if __name__ == "__main__":
         destination="Stripping",
     )
 
-    strip_liquor = Stream(stream_number=8, origin="Extraction", destination="Precipitation")
+    strip_liquor = Stream(stream_number=8, origin="Extraction", destination="Out")
 
     Stripping_unit = Stripping(
         name="Stripping",
@@ -112,9 +110,7 @@ if __name__ == "__main__":
         plot=True,
     )
 
-
     print(overflow)
-    print(overflow.total_mass)
     print()
     print(pls_acid)
     print()
@@ -135,13 +131,3 @@ if __name__ == "__main__":
     print(strip_liquor)
     print()
     print(Stripping_unit.mass_balance())
-
-    # print(acidic_pls.total_volume + barren_organic.total_volume)
-    # print(depleted_raffinate.total_volume + loaded_organic.total_volume)
-    # 3.3.7412065989108627 m^3 / hm
-
-    # G = generate_process_graph(units=units, streams=streams)
-    # draw_process_graph(G=G)
-
-    # A = nx.adjacency_matrix(G=G)
-    # print(A.todense())

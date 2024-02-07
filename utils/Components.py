@@ -301,7 +301,6 @@ class MN2_1p(Component):
         self,
         flow_rate: float,
         flow_type: str = "mass",
-
     ):
         super().__init__(
             name="MN2(+)",
@@ -312,6 +311,7 @@ class MN2_1p(Component):
             density=MN2_1p.DENSITY,
         )
 
+
 class Al_3p(Component):
     MOLECULAR_WEIGHT = 26.98  # g/ mol
     DENSITY = None  # kg /m^3
@@ -320,7 +320,6 @@ class Al_3p(Component):
         self,
         flow_rate: float,
         flow_type: str = "mass",
-
     ):
         super().__init__(
             name="Al(3+)",

@@ -57,12 +57,12 @@ class Stripping(UnitInterface):
                 H2SO4(strip_volume * h2so4_vol_percent, "volume"),
             ]
         )
-        print(
-            f'checking molarity SA : {self.__stripping_agent.get_component_property("H2SO4", "molar_flow")/(self.__stripping_agent.total_volume*1000)}'
-        )
-        print(
-            f"checking volume : {self.__stripping_agent.total_volume/self.__loaded_organic.total_volume}"
-        )
+        # print(
+        #     f'checking molarity SA : {self.__stripping_agent.get_component_property("H2SO4", "molar_flow")/(self.__stripping_agent.total_volume*1000)}'
+        # )
+        # print(
+        #     f"checking volume : {self.__stripping_agent.total_volume/self.__loaded_organic.total_volume}"
+        # )
 
     def __built_mcct(self) -> None:
         self.__mcct = McCabeThiele(

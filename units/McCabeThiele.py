@@ -80,7 +80,7 @@ class McCabeThiele:
             )
 
             if x < self.__min:
-                print("CONVERGED")
+                # print("CONVERGED")
                 x = self.__min
 
             if x is None:
