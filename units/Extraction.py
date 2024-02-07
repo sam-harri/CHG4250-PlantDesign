@@ -35,8 +35,10 @@ class Extraction(UnitInterface):
         self.__OA_ratio = OA_ratio
         self.__plot = plot
 
-        self.__tentative_BO = 0.0402
-        self.__tentative_DR = 0.0530
+        # NOTE
+        self.__tentative_BO = 0.01
+        self.__tentative_DR = 0.08
+        
         self.__size_organics()
         self.__build_mcct()
         self.__update_outlets()

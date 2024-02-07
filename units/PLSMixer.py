@@ -48,23 +48,23 @@ class PLSMixer(UnitInterface):
 
         updated_components = {comp.name: comp for comp in combined_components}
 
-        if not ("UO2_2p" in updated_components and "SO4(2-)" in updated_components):
-            raise ValueError("UO2_2p and SO4(-2) not in the PLSMixer component stream")
+        # # if not ("UO2_2p" in updated_components and "SO4(2-)" in updated_components):
+        # #     raise ValueError("UO2_2p and SO4(-2) not in the PLSMixer component stream")
 
-        uo2_2p_moles = updated_components["UO2_2p"].mol_flow
-        so4_2m_moles = updated_components["SO4(2-)"].mol_flow
+        # uo2_2p_moles = updated_components["UO2_2p"].mol_flow
+        # so4_2m_moles = updated_components["SO4(2-)"].mol_flow
 
-        if so4_2m_moles >= uo2_2p_moles:
-            updated_components["UO2SO4"] = UO2SO4(
-                flow_rate=uo2_2p_moles, flow_type="molar"
-            )
+        # if so4_2m_moles >= uo2_2p_moles:
+        #     updated_components["UO2SO4"] = UO2SO4(
+        #         flow_rate=uo2_2p_moles, flow_type="molar"
+        #     )
 
-            updated_components["SO4(2-)"].set_molar_flow(so4_2m_moles - uo2_2p_moles)
+        #     updated_components["SO4(2-)"].set_molar_flow(so4_2m_moles - uo2_2p_moles)
 
-            del updated_components["UO2_2p"]
-        else:
-            # Handle case where there's not enough SO4(-2) to convert all UO2_2p to UO2SO4
-            pass
+        #     del updated_components["UO2_2p"]
+        # else:
+        #     # Handle case where there's not enough SO4(-2) to convert all UO2_2p to UO2SO4
+        #     pass
 
         updated_components_list = list(updated_components.values())
 

@@ -8,6 +8,8 @@ from utils.Components import (
     SiO2,
     Al2SiO5,
     UO2SO4,
+    MN2_1p,
+    Al_3p
 )
 from utils.Stream import Stream
 from models.IsothermModeling import IsothermModel
@@ -21,14 +23,15 @@ overflow = Stream(
     origin="Filtration",
     destination="PLSMixer",
     components=[
-        UO2_2p(13.37),
-        Water(2929.17),
-        SO4_2m(97.09),
-        H_1p(1.41),
-        Mg(5.01),
-        Fe(5.75),
-        SiO2(7.43),
-        Al2SiO5(10.02),
+        Water(1075.428),
+        H_1p(0.004993),
+        UO2SO4(16.60078),
+        SO4_2m(33.40968),
+        Fe(6.3524),
+        MN2_1p(1.063569),
+        Mg(3.262506),
+        SiO2(3.871035),
+        Al_3p(1.331062)
     ],
 )
 
@@ -78,7 +81,7 @@ Extraction_unit = Extraction(
     loaded_organic=loaded_organic,
     depleted_raffinate=depleted_raffinate,
     num_stages=4,
-    efficiency=0.9,
+    efficiency=0.95,
     OA_ratio=1.5,
     plot=True,
 )
@@ -104,13 +107,14 @@ Stripping_unit = Stripping(
     strip_liquor=strip_liquor,
     stripped_org_Uconc=Extraction_unit.stripped_org_Uconc,
     loaded_org_Uconc=Extraction_unit.loaded_org_Uconc,
-    num_stages=4,
+    num_stages=6,
     efficiency=0.95,
     plot=True,
 )
 
 
 print(overflow)
+print(overflow.total_mass)
 print()
 print(pls_acid)
 print()
@@ -131,3 +135,7 @@ print()
 print(strip_liquor)
 print()
 print(Stripping_unit.mass_balance())
+
+# print(acidic_pls.total_volume + barren_organic.total_volume)
+# print(depleted_raffinate.total_volume + loaded_organic.total_volume)
+# 3.3.7412065989108627 m^3 / hm
