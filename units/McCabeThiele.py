@@ -2,7 +2,6 @@ import numpy as np
 from numpy.polynomial import Polynomial
 import matplotlib.pyplot as plt
 
-
 from models.IsothermModeling import IsothermModel
 
 
@@ -10,17 +9,19 @@ class McCabeThiele:
     def __init__(
         self,
         isotherm_model: IsothermModel,
-        operating_line: float,  # OpLine = Va/Vo
+        operating_line: Polynomial,  # OpLine = Va/Vo
         inlet_Uconcentration: float,
         num_stages: int,
         efficiency: float,
         plot: bool,
+        min: float = 0,
     ) -> None:
         self.isotherm_poly = isotherm_model.characteristic_poly
         self.operating_line = operating_line
         self.__inlet_Uconcentration = inlet_Uconcentration
         self.__efficiency = efficiency
         self.__num_stages = num_stages
+        self.__min = min
 
         self.__create_staircase()
 
@@ -64,15 +65,24 @@ class McCabeThiele:
             intersection_poly = self.isotherm_poly - Polynomial([current[1]])
             roots = intersection_poly.roots()
 
-            real_roots = [root.real for root in roots if np.isclose(root.imag, 0)]
+            real_roots = [
+                root.real for root in roots if np.isclose(root.imag, 0, atol=1e-8)
+            ]
+            real_roots_rev = real_roots[::-1]
+
             x = next(
                 (
                     current[0] - ((current[0] - root) * self.__efficiency)
-                    for root in real_roots
-                    if 0 <= root <= self.__inlet_Uconcentration
+                    for root in real_roots_rev
+                    if root <= self.__inlet_Uconcentration
                 ),
                 None,
             )
+
+            if x < self.__min:
+                print("CONVERGED")
+                x = self.__min
+
             if x is None:
                 raise "No Real Roots found in McCabe and Thiele range"
 
