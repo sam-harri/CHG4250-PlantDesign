@@ -43,11 +43,11 @@ class McCabeThiele:
 
         plt.xlim(left=0)
         plt.ylim(0, self.operating_line(self.__inlet_Uconcentration) * 1.05)
-        # plt.xlabel("Uranium in Aqueous Phase (g/L)")
-        # plt.ylabel("Uranium in Organic Phase (g/L)")
-        # plt.title(
-        #     f"Extraction Stripping McCabe-Thiele @ {self.__efficiency*100}% efficiency"
-        # )
+        plt.ylabel("Uranium in Aqueous Phase (g/L)")
+        plt.xlabel("Uranium in Organic Phase (g/L)")
+        plt.title(
+            f"Stripping - {self.__efficiency*100}% efficient stages"
+        )
         plt.show()
 
     def __create_staircase(self) -> None:

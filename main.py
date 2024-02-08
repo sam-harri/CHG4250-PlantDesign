@@ -73,6 +73,7 @@ if __name__ == "__main__":
             x_label="U(aq)",
             y_label="U(org)",
             change_intercept=False,
+            plot=False,
         ),
         pls=acidic_pls,
         stripped_organic=barren_organic,
@@ -81,7 +82,7 @@ if __name__ == "__main__":
         num_stages=4,
         efficiency=0.95,
         OA_ratio=1.5,
-        plot=True,
+        plot=False,
     )
 
     dilute_acid = Stream(
@@ -98,6 +99,7 @@ if __name__ == "__main__":
             data_path="data/UeqStrippingData.csv",
             x_label="U(org)",
             y_label="U(aq)",
+            plot=False,
         ),
         loaded_organic=loaded_organic,
         stripping_agent=dilute_acid,
@@ -107,7 +109,7 @@ if __name__ == "__main__":
         loaded_org_Uconc=Extraction_unit.loaded_org_Uconc,
         num_stages=6,
         efficiency=0.95,
-        plot=True,
+        plot=False,
     )
 
     print(overflow)
