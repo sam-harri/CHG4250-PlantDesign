@@ -45,9 +45,7 @@ class McCabeThiele:
         plt.ylim(0, self.operating_line(self.__inlet_Uconcentration) * 1.05)
         plt.ylabel("Uranium in Aqueous Phase (g/L)")
         plt.xlabel("Uranium in Organic Phase (g/L)")
-        plt.title(
-            f"Stripping - {self.__efficiency*100}% efficient stages"
-        )
+        plt.title(f"Stripping - {self.__efficiency*100}% efficient stages")
         plt.show()
 
     def __create_staircase(self) -> None:
@@ -84,7 +82,7 @@ class McCabeThiele:
                 x = self.__min
 
             if x is None:
-                raise "No Real Roots found in McCabe and Thiele range"
+                raise ValueError("No Real Roots found in McCabe and Thiele range")
 
             y = current[1]
             self.__X_staircase.append([current[0], x])
@@ -95,6 +93,9 @@ class McCabeThiele:
             self.__X_staircase.append([current[0], x])
             self.__Y_staircase.append([current[1], y])
             current = [x, y]
+
+        print(self.__X_staircase)
+        print()
 
     def get_top_coord(self) -> float:
         """

@@ -1,5 +1,5 @@
 pip install virtualenv
 virtualenv venv
-.\venv\Scripts\activate
+source venv/Scripts/activate
 pip install -r requirements.txt
 python main.py

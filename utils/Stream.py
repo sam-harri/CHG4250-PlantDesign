@@ -1,6 +1,7 @@
 from __future__ import annotations
 from typing import List, Dict
 from utils.Components import Component
+import numpy as np
 
 
 class Stream:
@@ -109,6 +110,12 @@ class Stream:
             )
 
         return combined_components
+
+    @staticmethod
+    def are_equal(vec1: np.ndarray, vec2: np.ndarray, tolerance=1e-4) -> bool:
+        if not vec1.shape == vec2.shape:
+            raise ValueError("Vectors must be of equal shape to compare")
+        return np.linalg.norm(vec1 - vec2) < tolerance
 
     def __repr__(self) -> str:
         component_details: str = "\n".join(

@@ -39,7 +39,11 @@ if __name__ == "__main__":
         destination="PLSMixer",
     )
 
-    acidic_pls = Stream(stream_number=3, origin="PLSMixer", destination="Extraction")
+    acidic_pls = Stream(
+        stream_number=3,
+        origin="PLSMixer",
+        destination="Extraction"
+    )
 
     PLSMixer_unit = PLSMixer(
         name="PLSMixer",
@@ -82,7 +86,7 @@ if __name__ == "__main__":
         num_stages=4,
         efficiency=0.95,
         OA_ratio=1.5,
-        plot=False,
+        plot=True,
     )
 
     dilute_acid = Stream(
@@ -109,7 +113,7 @@ if __name__ == "__main__":
         loaded_org_Uconc=Extraction_unit.loaded_org_Uconc,
         num_stages=6,
         efficiency=0.95,
-        plot=False,
+        plot=True,
     )
 
     print(overflow)

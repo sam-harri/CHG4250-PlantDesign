@@ -50,7 +50,7 @@ class IsothermModel:
             cv=LeaveOneOut(),
             scoring="neg_mean_squared_error",
         )
-        #remove last element
+        # remove last element
         return -np.mean(scores)  # returns MSE
 
     def __find_best_degree(self):
