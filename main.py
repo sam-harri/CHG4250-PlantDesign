@@ -39,11 +39,7 @@ if __name__ == "__main__":
         destination="PLSMixer",
     )
 
-    acidic_pls = Stream(
-        stream_number=3,
-        origin="PLSMixer",
-        destination="Extraction"
-    )
+    acidic_pls = Stream(stream_number=3, origin="PLSMixer", destination="Extraction")
 
     PLSMixer_unit = PLSMixer(
         name="PLSMixer",
@@ -85,8 +81,10 @@ if __name__ == "__main__":
         depleted_raffinate=depleted_raffinate,
         num_stages=4,
         efficiency=0.95,
-        OA_ratio=1.5,
-        plot=True,
+        OA_ratio=1.625,
+        tentative_BO=0.005,
+        tentative_DR=0.0558,
+        plot=False,
     )
 
     dilute_acid = Stream(
@@ -111,11 +109,13 @@ if __name__ == "__main__":
         strip_liquor=strip_liquor,
         stripped_org_Uconc=Extraction_unit.stripped_org_Uconc,
         loaded_org_Uconc=Extraction_unit.loaded_org_Uconc,
-        num_stages=6,
+        num_stages=5,
+        OA_ratio=2.72,
         efficiency=0.95,
-        plot=True,
+        plot=False,
     )
 
+    print(f"overflow volume : {loaded_organic.total_mass/loaded_organic.total_volume}")
     print(overflow)
     print()
     print(pls_acid)
@@ -134,6 +134,9 @@ if __name__ == "__main__":
     print()
     print(dilute_acid)
     print()
-    print(strip_liquor)
+    print(strip_liquor.total_volume)
     print()
     print(Stripping_unit.mass_balance())
+    print(strip_liquor.total_volume/3600)
+    print(strip_liquor.total_mass/strip_liquor.total_volume)
+    print(loaded_organic.total_volume/3600)
