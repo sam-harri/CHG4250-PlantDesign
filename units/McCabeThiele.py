@@ -1,6 +1,8 @@
 import numpy as np
 from numpy.polynomial import Polynomial
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
+
 
 from models.IsothermModeling import IsothermModel
 
@@ -22,30 +24,59 @@ class McCabeThiele:
         self.__efficiency = efficiency
         self.__num_stages = num_stages
         self.__min = min
-
+        self.error = False
         self.__create_staircase()
 
         if plot:
             self.__plot()
 
     def __plot(self) -> None:
+        # Generate isotherm data
         X_isotherm = np.linspace(0, self.__inlet_Uconcentration, 100)
         Y_isotherm = self.isotherm_poly(X_isotherm)
 
-        plt.plot(X_isotherm, Y_isotherm)
-        plt.plot(
+        # Create a figure and a set of subplots
+        fig, ax = plt.subplots()
+
+        # Plot isotherm line
+        ax.plot(X_isotherm, Y_isotherm, label='Isotherm', color='blue')
+
+        # Plot operating line
+        ax.plot(
             [0, self.__inlet_Uconcentration],
             [self.operating_line(0), self.operating_line(self.__inlet_Uconcentration)],
+            label='Operating Line', color='orange'
         )
 
+        # Plot staircase
         for i in range(len(self.__X_staircase)):
-            plt.plot(self.__X_staircase[i], self.__Y_staircase[i], c="black")
+            ax.plot(self.__X_staircase[i], self.__Y_staircase[i], c="black", linestyle='-', linewidth=2)
 
-        plt.xlim(left=0)
-        plt.ylim(0, self.operating_line(self.__inlet_Uconcentration) * 1.05)
-        plt.ylabel("Uranium in Aqueous Phase (g/L)")
-        plt.xlabel("Uranium in Organic Phase (g/L)")
-        plt.title(f"Stripping - {self.__efficiency*100}% efficient stages")
+        # Set limits
+        ax.set_xlim(left=0)
+        ax.set_ylim(0, self.operating_line(self.__inlet_Uconcentration) * 1.05)
+
+        # Add labels
+        ax.set_ylabel("Uranium in Aqueous Phase (g/L)")
+        ax.set_xlabel("Uranium in Organic Phase (g/L)")
+
+        # Add grid
+        ax.grid(True, which='both', linestyle='--', linewidth=0.5)
+
+        # Add a legend
+        ax.legend()
+
+        # Use integer ticks only
+        ax.xaxis.set_major_locator(MaxNLocator(integer=True))
+        ax.yaxis.set_major_locator(MaxNLocator(integer=True))
+
+        # Set the aspect of the plot to be equal
+        ax.set_aspect(1/4.7, adjustable='box')
+
+        # Optionally add a title
+        # ax.set_title(f"Extraction - {self.__efficiency*100}% efficient stages")
+
+        # Adjust the padding between and around subplots and display the plot
         plt.show()
 
     def __create_staircase(self) -> None:
@@ -59,7 +90,17 @@ class McCabeThiele:
             self.operating_line(self.__inlet_Uconcentration),
         ]
 
+        if self.operating_line(self.__inlet_Uconcentration) > self.isotherm_poly(
+            self.__inlet_Uconcentration
+        ):
+            self.error = True
+            return
+        repeat_flag = False
+
         for _ in range(self.__num_stages):
+            if repeat_flag:
+                self.error = True
+                return
             intersection_poly = self.isotherm_poly - Polynomial([current[1]])
             roots = intersection_poly.roots()
 
@@ -78,7 +119,7 @@ class McCabeThiele:
             )
 
             if x < self.__min:
-                # print("CONVERGED")
+                repeat_flag = True
                 x = self.__min
 
             if x is None:
@@ -94,8 +135,12 @@ class McCabeThiele:
             self.__Y_staircase.append([current[1], y])
             current = [x, y]
 
-        print(self.__X_staircase)
-        print()
+        if not repeat_flag:
+            self.error = True
+            return
+
+        # print(self.__X_staircase)
+        # print()
 
     def get_top_coord(self) -> float:
         """

@@ -40,6 +40,7 @@ class Stripping(UnitInterface):
         self.__OA_ratio = OA_ratio
         self.__stripping_agent_molarity = stripping_agent_molarity
         self.__plot = plot
+        self.__error = False
 
         self.__size_stripping_agent()
         self.__built_mcct()
@@ -79,6 +80,9 @@ class Stripping(UnitInterface):
             plot=self.__plot,
             min=self.__stripped_org_Uconc,
         )
+        if self.__mcct.error:
+            self.__error = True
+            return
 
         # print("\nAqeous State")
         # print(f"Strip Liquor : {self.__mcct.get_top_coord()[1]}")
@@ -88,15 +92,40 @@ class Stripping(UnitInterface):
         # print(f"Loaded Organic : {self.__mcct.get_top_coord()[0]}")
 
     def __size_strip_liquor(self) -> None:
+        if self.__error:
+            return
         strip_liq_comps = deepcopy(self.__stripping_agent.components)
         uo2so4_mass = self.__loaded_organic.get_component_property(
             "UO2SO4", "mass_flow"
         ) - self.__stripped_organic.get_component_property("UO2SO4", "mass_flow")
         strip_liq_comps.append(UO2SO4(uo2so4_mass, "mass"))
         self.__strip_liquor.update_components(strip_liq_comps)
+        self.mass_balance_check()
+
+    def get_strip_concentration(self) -> float:
+        return self.__mcct.get_top_coord()[1]
+
+    def error(self):
+        return self.__error
 
     def mass_balance(self) -> str:
-        return f"Extraction Mass Balance : {round(self.__loaded_organic.total_mass + self.__stripping_agent.total_mass - self.__stripped_organic.total_mass - self.__strip_liquor.total_mass,4)}"
+        return f"Stripping Mass Balance : {round(self.__loaded_organic.total_mass + self.__stripping_agent.total_mass - self.__stripped_organic.total_mass - self.__strip_liquor.total_mass,4)}"
+
+    def mass_balance_check(self) -> None:
+        if (
+            round(
+                self.__loaded_organic.total_mass
+                + self.__stripping_agent.total_mass
+                - self.__stripped_organic.total_mass
+                - self.__strip_liquor.total_mass,
+                4,
+            )
+            != 0
+        ):
+            raise ValueError("Failed Mass Balance on Strippping")
+    
+    def stripping_per_stage(self) -> float:
+        return (self.__mcct.get_top_coord()[0] - self.__mcct.get_bottom_coord()[0]) / self.__num_stages
 
     def get_operating_conditions(self) -> Dict[str, float]:
         pass
